@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Winnie Pooh Mágico para ti 💛✨</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Quicksand:wght@400;600;700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(45deg, #ff9a9e, #fecfef, #fecfef, #fad0c4);
+      background-size: 400% 400%;
+      animation: gradientShift 8s ease infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Quicksand', sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Partículas mágicas */
+    .magic-particles {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: radial-gradient(circle, #ffff00, #ffd700);
+      border-radius: 50%;
+      animation: sparkle 2s infinite linear;
+    }
+
+    @keyframes sparkle {
+      0% { 
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+        scale: 0;
+      }
+      10% { 
+        opacity: 1;
+        scale: 1;
+      }
+      90% { 
+        opacity: 1;
+      }
+      100% { 
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+        scale: 0;
+      }
+    }
+
+    /* Contenedor principal con efectos */
+    .container {
+      position: relative;
+      z-index: 10;
+      animation: float 4s ease-in-out infinite;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.2));
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      25% { transform: translateY(-15px) rotate(1deg); }
+      75% { transform: translateY(-5px) rotate(-1deg); }
+    }
+
+    .pooh {
+      position: relative;
+      width: 220px;
+      height: 400px;
+      transition: all 0.3s ease;
+    }
+
+    .pooh.excited {
+      animation: wiggle 0.6s ease-in-out;
+    }
+
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(5deg); }
+      75% { transform: rotate(-5deg); }
+    }
+
+    /* Orejas con efectos brillantes */
+    .ear {
+      width: 50px;
+      height: 50px;
+      background: conic-gradient(from 45deg, #ffdd44, #fcd659, #ffdd44);
+      border-radius: 50%;
+      position: absolute;
+      top: 5px;
+      z-index: 1;
+      border: 3px solid #e6c200;
+      box-shadow: inset 0 0 20px rgba(255,255,255,0.3);
+    }
+
+    .ear.left { 
+      left: 15px; 
+      transform: rotate(-20deg);
+    }
+    .ear.right { 
+      right: 15px; 
+      transform: rotate(20deg);
+    }
+
+    .ear-inner {
+      width: 22px;
+      height: 22px;
+      background: radial-gradient(circle, #ff69b4, #ff1493);
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+    /* Cabeza interactiva */
+    .head {
+      width: 160px;
+      height: 150px;
+      background: conic-gradient(from 0deg, #ffdd44, #fcd659, #ffeb3b, #fcd659);
+      border-radius: 50%;
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      z-index: 2;
+      border: 4px solid #e6c200;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 0 30px rgba(255,255,255,0.4);
+    }
+
+    .head:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 30px rgba(255,215,0,0.6), inset 0 0 30px rgba(255,255,255,0.4);
+    }
+
+    .head:active {
+      transform: scale(0.98);
+    }
+
+    .head.clicked {
+      animation: rainbow 2s ease-in-out;
+    }
+
+    @keyframes rainbow {
+      0% { background: conic-gradient(from 0deg, #ffdd44, #fcd659, #ffeb3b, #fcd659); }
+      25% { background: conic-gradient(from 90deg, #ff69b4, #ff1493, #ff69b4, #ff1493); }
+      50% { background: conic-gradient(from 180deg, #87ceeb, #4169e1, #87ceeb, #4169e1); }
+      75% { background: conic-gradient(from 270deg, #98fb98, #32cd32, #98fb98, #32cd32); }
+      100% { background: conic-gradient(from 360deg, #ffdd44, #fcd659, #ffeb3b, #fcd659); }
+    }
+
+    /* Ojos expresivos */
+    .eye {
+      width: 14px;
+      height: 14px;
+      background: radial-gradient(circle, #333, #000);
+      border-radius: 50%;
+      position: absolute;
+      top: 60px;
+      animation: blink 5s infinite;
+    }
+
+    .eye.left { left: 50px; }
+    .eye.right { right: 50px; }
+
+    .eye.wink {
+      animation: wink 1s ease-in-out;
+    }
+
+    @keyframes blink {
+      0%, 90%, 100% { transform: scaleY(1); }
+      95% { transform: scaleY(0.1); }
+    }
+
+    @keyframes wink {
+      0%, 100% { transform: scaleY(1); }
+      50% { transform: scaleY(0.1); }
+    }
+
+    /* Nariz brillante */
+    .nose {
+      width: 22px;
+      height: 18px;
+      background: radial-gradient(circle at 30% 30%, #666, #222);
+      border-radius: 50%;
+      position: absolute;
+      top: 80px;
+      left: 69px;
+      z-index: 3;
+      animation: twinkle 3s infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+      50% { box-shadow: 0 0 20px rgba(255,255,255,0.8); }
+    }
+
+    /* Sonrisa animada */
+    .smile {
+      position: absolute;
+      top: 105px;
+      left: 55px;
+      width: 50px;
+      height: 25px;
+      border-bottom: 5px solid #333;
+      border-radius: 0 0 50% 50%;
+      z-index: 3;
+      transition: all 0.3s ease;
+    }
+
+    .smile.happy {
+      animation: bigSmile 1s ease-in-out;
+    }
+
+    @keyframes bigSmile {
+      0%, 100% { width: 50px; border-bottom-width: 5px; }
+      50% { width: 60px; border-bottom-width: 7px; transform: translateX(-5px); }
+    }
+
+    /* Cuerpo con gradiente animado */
+    .body {
+      width: 180px;
+      height: 170px;
+      background: conic-gradient(from 0deg, #ffdd44, #fcd659, #ffeb3b, #fcd659);
+      position: absolute;
+      top: 160px;
+      left: 20px;
+      border-radius: 50% / 45%;
+      z-index: 1;
+      border: 4px solid #e6c200;
+      box-shadow: inset 0 0 30px rgba(255,255,255,0.3);
+    }
+
+    /* Camiseta con patrón */
+    .shirt {
+      position: absolute;
+      top: 170px;
+      left: 20px;
+      width: 180px;
+      height: 85px;
+      background: linear-gradient(135deg, #dc3545, #c23b22, #ff6b6b);
+      border-top-left-radius: 50px;
+      border-top-right-radius: 50px;
+      z-index: 2;
+      border: 3px solid #a01e2a;
+      overflow: hidden;
+    }
+
+    .shirt::before {
+      content: "🍯";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.2); }
+    }
+
+    /* Brazos animados */
+    .arm {
+      width: 40px;
+      height: 75px;
+      background: conic-gradient(from 0deg, #ffdd44, #fcd659, #ffeb3b, #fcd659);
+      position: absolute;
+      top: 180px;
+      border-radius: 25px;
+      border: 3px solid #e6c200;
+      box-shadow: inset 0 0 20px rgba(255,255,255,0.3);
+      animation: wave 3s infinite ease-in-out;
+    }
+
+    .arm.left { 
+      left: -30px; 
+      transform-origin: top center;
+      animation-delay: 0s;
+    }
+    .arm.right { 
+      right: -30px; 
+      transform-origin: top center;
+      animation-delay: 1.5s;
+    }
+
+    @keyframes wave {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(15deg); }
+      75% { transform: rotate(-15deg); }
+    }
+
+    /* Manos con brillo */
+    .hand {
+      width: 28px;
+      height: 28px;
+      background: radial-gradient(circle, #ffdd44, #fcd659);
+      border-radius: 50%;
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 3px solid #e6c200;
+      box-shadow: 0 0 15px rgba(255,215,0,0.5);
+    }
+
+    /* Piernas mejoradas */
+    .leg {
+      width: 45px;
+      height: 55px;
+      background: conic-gradient(from 0deg, #ffdd44, #fcd659, #ffeb3b, #fcd659);
+      position: absolute;
+      top: 310px;
+      border-radius: 25px;
+      border: 3px solid #e6c200;
+      box-shadow: inset 0 0 20px rgba(255,255,255,0.3);
+    }
+
+    .leg.left { left: 55px; }
+    .leg.right { right: 55px; }
+
+    /* Pies con efectos */
+    .foot {
+      width: 55px;
+      height: 35px;
+      background: radial-gradient(ellipse, #ffdd44, #fcd659);
+      position: absolute;
+      bottom: -15px;
+      border-radius: 50% / 40%;
+      border: 3px solid #e6c200;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .foot.left { left: 40px; }
+    .foot.right { right: 40px; }
+
+    /* Mensaje súper sorprendente */
+    .message-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #ff69b4, #ff1493, #ff69b4);
+      background-size: 200% 200%;
+      animation: gradientMove 3s infinite;
+      color: white;
+      padding: 30px 40px;
+      border-radius: 30px;
+      font-size: 22px;
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s ease;
+      border: 4px solid #ff1493;
+      max-width: 400px;
+      font-family: 'Fredoka One', cursive;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .message-popup.show {
+      opacity: 1;
+      visibility: visible;
+      animation: popInBig 0.8s ease;
+    }
+
+    @keyframes popInBig {
+      0% { 
+        transform: translate(-50%, -50%) scale(0.3) rotate(-180deg);
+        opacity: 0;
+      }
+      50% { 
+        transform: translate(-50%, -50%) scale(1.1) rotate(10deg);
+      }
+      100% { 
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+
+    .message-popup::before {
+      content: "✨";
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 30px;
+      background: white;
+      border-radius: 50%;
+      padding: 8px;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: translateX(-50%) rotate(0deg); }
+      100% { transform: translateX(-50%) rotate(360deg); }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .close-btn:hover {
+      color: #ffff99;
+      transform: scale(1.2);
+    }
+
+    /* Confeti explosivo */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: #ff69b4;
+      z-index: 999;
+      animation: confettiFall 3s linear infinite;
+    }
+
+    @keyframes confettiFall {
+      0% { 
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% { 
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* Botón secreto */
+    .secret-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .secret-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    }
+
+    /* Tarro de miel giratorio */
+    .honey-pot {
+      position: fixed;
+      top: 50px;
+      right: 50px;
+      width: 80px;
+      height: 90px;
+      background: linear-gradient(135deg, #ffa500, #ff8c00, #ffb347);
+      border-radius: 0 0 40px 40px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 50;
+    }
+
+    .honey-pot:hover {
+      animation: honeyShake 0.5s ease-in-out;
+    }
+
+    @keyframes honeyShake {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(10deg); }
+      75% { transform: rotate(-10deg); }
+    }
+
+    .honey-pot::before {
+      content: "🍯";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 28px;
+      animation: honeyGlow 2s infinite;
+    }
+
+    @keyframes honeyGlow {
+      0%, 100% { text-shadow: 0 0 10px rgba(255,215,0,0.5); }
+      50% { text-shadow: 0 0 20px rgba(255,215,0,0.8); }
+    }
+
+    /* Texto principal mejorado */
+    .sign {
+      margin-top: 50px;
+      background: linear-gradient(135deg, #ffb6c1, #ff91a4, #ffa0c4);
+      background-size: 200% 200%;
+      animation: gradientMove 4s infinite;
+      padding: 20px 30px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 20px;
+      color: #333;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+      border: 4px solid #ff8fa3;
+      font-family: 'Fredoka One', cursive;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .sign:hover {
+      transform: scale(1.05);
+      animation: heartbeat 1s infinite;
+      box-shadow: 0 0 25px rgba(255,105,180,0.5);
+    }
+
+    /* Mensaje largo especial */
+    .long-message-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #ff6b6b, #ff8e8e, #ffa8a8);
+      background-size: 200% 200%;
+      animation: gradientMove 4s infinite;
+      color: white;
+      padding: 40px 50px;
+      border-radius: 35px;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.4);
+      z-index: 1001;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.6s ease;
+      border: 5px solid #ff4757;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      font-family: 'Quicksand', sans-serif;
+      line-height: 1.6;
+    }
+
+    .long-message-popup.show {
+      opacity: 1;
+      visibility: visible;
+      animation: longPopIn 1s ease;
+    }
+
+    @keyframes longPopIn {
+      0% { 
+        transform: translate(-50%, -50%) scale(0.2) rotate(-360deg);
+        opacity: 0;
+      }
+      50% { 
+        transform: translate(-50%, -50%) scale(1.05) rotate(10deg);
+      }
+      100% { 
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+
+    .long-message-popup::before {
+      content: "💌";
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 35px;
+      background: white;
+      border-radius: 50%;
+      padding: 10px;
+      animation: heartPulse 2s infinite;
+      border: 3px solid #ff4757;
+    }
+
+    @keyframes heartPulse {
+      0%, 100% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.2); }
+    }
+
+    .long-message-content {
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .long-message-content h2 {
+      color: #fff;
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-family: 'Fredoka One', cursive;
+      text-shadow: 0 3px 6px rgba(0,0,0,0.4);
+    }
+
+    .long-message-content p {
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+
+    .long-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1.05); }
+      50% { transform: scale(1.1); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Partículas mágicas -->
+  <div class="magic-particles" id="particles"></div>
+
+  <!-- Tarro de miel interactivo -->
+  <div class="honey-pot" onclick="honeyClick()" title="¡Haz clic aquí para sorpresas!"></div>
+
+  <!-- Botón secreto -->
+  <button class="secret-btn" onclick="surpriseMode()" title="¡Botón mágico!">🎉</button>
+
+  <div class="container">
+    <div class="pooh" id="pooh">
+      <div class="ear left">
+        <div class="ear-inner"></div>
+      </div>
+      <div class="ear right">
+        <div class="ear-inner"></div>
+      </div>
+
+      <div class="head" id="head" onclick="showMessage()">
+        <div class="eye left" id="leftEye"></div>
+        <div class="eye right" id="rightEye"></div>
+        <div class="nose" id="nose"></div>
+        <div class="smile" id="smile"></div>
+      </div>
+
+      <div class="shirt"></div>
+      <div class="body"></div>
+
+      <div class="arm left">
+        <div class="hand"></div>
+      </div>
+      <div class="arm right">
+        <div class="hand"></div>
+      </div>
+
+      <div class="leg left"></div>
+      <div class="leg right"></div>
+
+      <div class="foot left"></div>
+      <div class="foot right"></div>
+    </div>
+
+    <div class="sign" id="sign" onclick="showLongMessage()">Para ti, ojitos de miel 🍯💛</div>
+  </div>
+
+  <!-- Mensaje emergente súper sorprendente -->
+  <div class="message-popup" id="messagePopup">
+    <button class="close-btn" onclick="hideMessage()">×</button>
+    <div id="messageText">¡Hola mi princesa hermosa! ✨<br>¡Eres una gran persona! 💫<br>¡Te quiero mucho! 🍯💛</div>
+  </div>
+
+  <!-- Mensaje largo especial -->
+  <div class="long-message-popup" id="longMessagePopup">
+    <button class="long-close-btn" onclick="hideLongMessage()">×</button>
+    <div class="long-message-content">
+      <h2>💛 Carta especial para ti 💛</h2>
+<p>Hermosa niñita de ojitos tan preciosos, hice algo que espero y te guste mucho.</p>
+<p>Sabes, hay algo que sí quiero decirte: eres una gran muchachita, como no lo imaginas. En verdad, eres lo más bonito del mundo. 🎵✨</p>
+<p>Cada día me sorprendes con tu inteligencia y con lo rápido que aprendes cosas nuevas. Me encanta que ya hasta eres una niñita repostera, ¡eso es increíble la verdad! 🌟🌸</p>
+<p>Cuando te miro, siempre quiero ver tus ojitos tan hermosos que tanto me gustan, tu linda sonrisa y tu voz, que me encanta. 👣💪</p>
+<p>Se que hoy casi no hemos hablado, y lo entiendo porque estás ocupadita en tu trabajo. Aun así, no sabes cuánto me gusta hablar contigo y ver que me mandas mensajes. 🌈🍯</p>
+<p>Recuerda siempre: eres increíble, eres valiosa, eres única e irreemplazable. Nunca dejes que nadie te haga sentir menos de lo maravillosa que eres. 👑💖</p>
+<p>Con todo mi amor y cariño,<br>Tu Winnie Pooh que te ama infinitamente 🧸💛</p>
+<p><em>"Eres más valiente de lo que crees, siempre aprendes muchas cosas y eso es lo que me gusta de ti... Simplemente eres increíble, ojitos de miel y creme que si me gustaria que salieras conmigo un dia en verdad."</em> ✨</p>
+
+  </div>
+
+  <script>
+    // Mensajes sorprendentes aleatorios
+    const surpriseMessages = [
+      "¡Hola, niñita de ojitos bonitos! ✨<br>Solo quería decirte que me encantas tal y como eres. 💛<br>Tu forma de ser tiene algo que me hace sonreír. 😊",
+
+"¡Eres de esas personas que brillan sin darse cuenta! 🌟<br>Siempre es bonito saber de ti. 💬<br>Gracias por ser tan especial, aunque no lo sepas. 🌷",
+
+"¡Tu sonrisa tiene algo mágico! ✨<br>Y tu forma de ver el mundo... simplemente me encanta. 🍃<br>Ojalá algún día pueda conocerte aún más. 💫",
+
+"¡No sé cómo lo haces, pero siempre me alegras el día! ☀️<br>Tu dulzura es de las que no se encuentran fácil. 🍯<br>Te mereces todo lo bonito del mundo. 🌎💖",
+
+"¡Eres como un rayito de sol en un día gris! 🌈<br>No hace falta que hagas mucho, ya eres genial solo por ser tú. 🌸<br>Solo quería recordártelo. 😊✨"
+
+    ];
+
+    // Crear partículas mágicas
+    function createParticles() {
+      const container = document.getElementById('particles');
+      setInterval(() => {
+        if (document.querySelectorAll('.particle').length < 20) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          particle.style.left = Math.random() * 100 + '%';
+          particle.style.animationDelay = Math.random() * 2 + 's';
+          particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+          container.appendChild(particle);
+          
+          setTimeout(() => {
+            particle.remove();
+          }, 5000);
+        }
+      }, 300);
+    }
+
+    // Mostrar mensaje con efectos
+    function showMessage() {
+      const popup = document.getElementById('messagePopup');
+      const messageText = document.getElementById('messageText');
+      const head = document.getElementById('head');
+      const pooh = document.getElementById('pooh');
+      const leftEye = document.getElementById('leftEye');
+      const rightEye = document.getElementById('rightEye');
+      const smile = document.getElementById('smile');
+      
+      // Mensaje aleatorio
+      const randomMessage = surpriseMessages[Math.floor(Math.random() * surpriseMessages.length)];
+      messageText.innerHTML = randomMessage;
+      
+      // Efectos visuales
+      head.classList.add('clicked');
+      pooh.classList.add('excited');
+      leftEye.classList.add('wink');
+      rightEye.classList.add('wink');
+      smile.classList.add('happy');
+      
+      popup.classList.add('show');
+      
+      // Crear confeti
+      createConfetti();
+      
+      // Limpiar efectos
+      setTimeout(() => {
+        head.classList.remove('clicked');
+        pooh.classList.remove('excited');
+        leftEye.classList.remove('wink');
+        rightEye.classList.remove('wink');
+        smile.classList.remove('happy');
+      }, 2000);
+      
+      // Auto-cerrar después de 6 segundos
+      setTimeout(() => {
+        hideMessage();
+      }, 6000);
+    }
+
+    // Ocultar mensaje
+    function hideMessage() {
+      const popup = document.getElementById('messagePopup');
+      popup.classList.remove('show');
+    }
+
+    // Mostrar mensaje largo especial
+    function showLongMessage() {
+      const longPopup = document.getElementById('longMessagePopup');
+      const sign = document.getElementById('sign');
+      
+      // Efecto en el botón
+      sign.style.animation = 'heartbeat 0.5s ease-in-out 3';
+      
+      // Mostrar mensaje largo
+      longPopup.classList.add('show');
+      
+      // Crear confeti especial
+      createConfetti();
+      
+      // Auto-cerrar después de 15 segundos
+      setTimeout(() => {
+        hideLongMessage();
+      }, 15000);
+    }
+
+    // Ocultar mensaje largo
+    function hideLongMessage() {
+      const longPopup = document.getElementById('longMessagePopup');
+      longPopup.classList.remove('show');
+    }
+    function createConfetti() {
+      const colors = ['#ff69b4', '#ffd700', '#87ceeb', '#98fb98', '#ff6b6b', '#dda0dd'];
+      
+      for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.left = Math.random() * 100 + '%';
+          confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.animationDelay = Math.random() * 2 + 's';
+          confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+          document.body.appendChild(confetti);
+          
+          setTimeout(() => {
+            confetti.remove();
+          }, 4000);
+        }, i * 50);
+      }
+    }
+
+    // Clic en tarro de miel
+    function honeyClick() {
+      const sign = document.getElementById('sign');
+      const messages = [
+        "¡Dulce como la miel! 🍯✨",
+        "¡Eres el  tesorito dorado! 💛👑",
+        "¡La niña de oro! ✨🌟",
+        "¡Preciosa como un diamante! 💎💖",
+        "¡Preciosa hermosa! 👸💫"
+      ];
+      
+      sign.innerHTML = messages[Math.floor(Math.random() * messages.length)];
+      
+      setTimeout(() => {
+        sign.innerHTML = "Para ti, preciosura 🍯💛";
+      }, 3000);
+    }
+
+    // Modo sorpresa extremo
+    function surpriseMode() {
+      // Cambiar colores de fondo
+      document.body.style.animation = 'gradientShift 1s ease infinite';
+      
+      // Mostrar mensaje especial
+      showMessage();
+      
+      // Crear explosión de confeti
+      createConfetti();
+      
+      // Efectos de sonido simulados con vibración visual
+      const pooh = document.getElementById('pooh');
+      pooh.style.animation = 'wiggle 0.1s ease-in-out infinite';
+      
+      setTimeout(() => {
+        pooh.style.animation = 'float 4s ease-in-out infinite';
+        document.body.style.animation = 'gradientShift 8s ease infinite';
+      }, 2000);
+    }
+
+    // Inicializar partículas
+    createParticles();
+
+    // Efectos adicionales al cargar
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        createConfetti();
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
